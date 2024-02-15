@@ -1,0 +1,94 @@
+
+#video {
+    width: 100%;
+    height: auto;
+}
+#canvas {
+    width: 100%;
+    height: auto;
+}
+
+.custom-btn {
+width: calc(20% - 10px); /* Butonların genişliğini eşit olarak ayarla */
+margin: 0 5px; /* Butonlar arasında 5 piksellik bir boşluk bırak */
+}
+
+
+/* login */
+body {
+    font-family: Arial, sans-serif;
+}
+form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+input[type="text"], input[type="password"], input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    display: block;
+}
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    /* margin: 5px 0px; */
+    margin-left: 12px;
+
+
+}
+input[type="submit"]:hover {
+    background-color: #45a049;
+   
+}
+.register-link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+
+/* foto.html */
+#video {
+    width: 100%;
+}
+
+#noteInput {
+    width: 100%;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.custom-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    margin: 0 5px;
+}
+
+#photo-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.photo {
+    max-width: 150px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#messageDiv {
+    text-align: center;
+    margin-top: 20px;
+}
