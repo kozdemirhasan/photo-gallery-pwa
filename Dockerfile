@@ -2,7 +2,7 @@
 FROM node:latest
 
 # Uygulamanızın çalışacağı dizini oluşturun
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Bağımlılıkları kopyalayın ve yükleyin
 COPY package*.json ./
