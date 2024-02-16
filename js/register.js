@@ -72,6 +72,8 @@ function saveUserToIndexedDB(email, password) {
 
         addRequest.onsuccess = function (event) {
             console.log('User saved to IndexedDB:', email);
+            window.location.href = '/pages/foto.html';
+
         };
 
         transaction.onerror = function (event) {
