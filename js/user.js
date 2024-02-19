@@ -17,17 +17,17 @@ function validateForm(email, password, passwordRepeat) {
     // Email doğrulama
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        alert("Geçerli bir e-posta adresi giriniz.");
+        alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
         return false;
     }
 
     // Şifre doğrulama
     if (password === "" || passwordRepeat === "") {
-        alert("Şifre alanı boş bırakılamaz.");
+        alert("Das Passwortfeld darf nicht leer bleiben.");
         return false;
     }
     if (password !== passwordRepeat) {
-        alert("Şifreler eşleşmiyor.");
+        alert("Passwörter stimmen nicht überein.");
         return false;
     }
     if (password.length < 8) {
@@ -39,7 +39,7 @@ function validateForm(email, password, passwordRepeat) {
 
     if (!passwordRegex.test(password)) {
         // alert("Şifre en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter içermelidir.");
-        alert("Şifre en az bir büyük harf, bir küçük harf ve bir sayı  içermelidir.");
+        alert("Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten");
         return false;
     }
 
@@ -109,12 +109,12 @@ function checkUser(email, password) {
                 // Her fotoğraf için bir img etiketi oluştur ve boyutlandırma stilleri ekle
                 users.forEach(function (user) {
                     if (user.email === email && user.password === password) {
-                        console.log('Kullanici bulundu: ' + user.email + '\n');
+                        console.log('Benutzer gefunden: ' + user.email + '\n');
                     }
                 });
 
             } else {
-                console.log('Kullanici kayitli degil');
+                console.log('Der Benutzer ist nicht registriert');
             }
         };
     };
@@ -124,18 +124,18 @@ function validateLogin(email, password) {
     // Email doğrulama
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-        alert("Geçerli bir e-posta adresi giriniz.");
+        alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
         return false;
     }
 
     // Şifre doğrulama
     if (password === "" || passwordRepeat === "") {
-        alert("Şifre alanı boş bırakılamaz.");
+        alert("Das Passwortfeld darf nicht leer bleiben.");
         return false;
     }
 
     if (password.length < 8) {
-        alert("Şifre en az 8 karakter olmalıdır.");
+        alert("Das Passwort muss mindestens 8 Zeichen lang sein.");
         return false;
     }
     // var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
@@ -143,7 +143,7 @@ function validateLogin(email, password) {
 
     if (!passwordRegex.test(password)) {
         // alert("Şifre en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter içermelidir.");
-        alert("Şifre en az bir büyük harf, bir küçük harf ve bir sayı  içermelidir.");
+        alert("Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten.");
         return false;
     }
 

@@ -16,7 +16,7 @@ function checkUser(userEmail, userPassword) {
     var request = indexedDB.open('photoDB', 1);
 
     request.onerror = function (event) {
-        console.log('sistemde kayitli kullanici yok.');
+        console.log('Es sind keine Benutzer im System registriert.');
         console.log('Error opening IndexedDB:', event.target.errorCode);
     };
 
@@ -41,7 +41,7 @@ function checkUser(userEmail, userPassword) {
                 // Her fotoğraf için bir img etiketi oluştur ve boyutlandırma stilleri ekle
                 users.forEach(function (user) {
                     if (user.email === userEmail && user.password === userPassword) {
-                        console.log('Kullanici bulundu: ' + user.email + '\n');
+                        console.log('Benutzer gefunden: ' + user.email + '\n');
                         window.location.href = '/pages/foto.html';
                     }
                 });
@@ -57,13 +57,13 @@ function validateLogin(userEmail, userPassword) {
     // Email doğrulama
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(userEmail)) {
-        alert("Geçerli bir e-posta adresi giriniz.");
+        alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
         return false;
     }
    
 
     if (userPassword.length < 8) {
-        alert("Şifre en az 8 karakter olmalıdır.");
+        alert("Das Passwort muss mindestens 8 Zeichen lang sein.");
         return false;
     }
     // var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
@@ -71,7 +71,7 @@ function validateLogin(userEmail, userPassword) {
 
     if (!passwordRegex.test(userPassword)) {
         // alert("Şifre en az bir büyük harf, bir küçük harf, bir sayı ve bir özel karakter içermelidir.");
-        alert("Şifre en az bir büyük harf, bir küçük harf ve bir sayı  içermelidir.");
+        alert("Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten.");
         return false;
     }
 
