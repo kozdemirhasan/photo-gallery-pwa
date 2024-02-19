@@ -4,47 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harita Örneği</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBPG2nYGCu4MUpw1tDFMecyRqTpInudU8&callback=initMap"
-        async defer></script>
+    <title>Google Maps</title>
+    <!-- <link rel="stylesheet" href="/css/main.css"/> -->
+    <!-- <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style> -->
 </head>
 
 <body>
-    <button onclick="showCurrentLocation()">Konumu Göster</button>
     <div id="map"></div>
 
     <script>
-        function showCurrentLocation() {
-            // Konum bilgilerini alma
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    // Konum bilgilerini alındıktan sonra haritayı göster
-                    showMap(position.coords.latitude, position.coords.longitude);
+        function initMap() {
+            // Konum bilgilerini al
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+
+                // Konumu haritada göster
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: latitude, lng: longitude },
+                    zoom: 15
                 });
-            } else {
-                alert("Tarayıcınız konum bilgisi desteklemiyor.");
-            }
-        }
 
-        function showMap(latitude, longitude) {
-            // Google Haritalar API'yi kullanarak haritayı oluştur
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: latitude, lng: longitude },
-                zoom: 15
-            });
-
-            // Konumu işaretleyen bir işaretçi ekle
-            var marker = new google.maps.Marker({
-                position: { lat: latitude, lng: longitude },
-                map: map,
-                title: 'Şu an buradasınız!'
+                var marker = new google.maps.Marker({
+                    position: { lat: latitude, lng: longitude },
+                    map: map,
+                    title: 'Konumunuz'
+                });
             });
         }
-
     </script>
-
-
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnoYsIteIM_QbyXAZ1gScqb1FHUGSMZXk&callback=initMap">
+    </script>
 
 </body>
 
 </html>
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Marker</title>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnoYsIteIM_QbyXAZ1gScqb1FHUGSMZXk&callback=console.debug&libraries=maps,marker&v=beta">
+        </script>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body>
+    <gmp-map center="40.12150192260742,-100.45039367675781" zoom="4" map-id="DEMO_MAP_ID">
+        <gmp-advanced-marker position="40.12150192260742,-100.45039367675781" title="My location"></gmp-advanced-marker>
+    </gmp-map>
+
+ 
+
+   
+
+
+</body>
+
+</html> -->
