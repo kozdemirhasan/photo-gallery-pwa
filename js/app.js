@@ -297,7 +297,7 @@ function requestNotificationPermission() {
         // İzin verildiğinde bildirim gönderme işlemini gerçekleştir
         sendNotification();
         // sendNotificationWithDelay();
-      }
+      }      
     });
   } else {
     // Zaten izin verildiğinde direkt bildirim gönderme işlemini gerçekleştir
