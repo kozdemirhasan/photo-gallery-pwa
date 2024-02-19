@@ -37,8 +37,11 @@
                             placeholder="Fügen Sie hier Ihre Notiz hinzu"></textarea>
                     </div>
                     <div class="btn-group mt-4">
-                        <button id="btnSend" aria-label="Name" class="btn btn-primary custom-btn oval-btn" 
+                        <button id="btnSend" aria-label="Name" class="btn btn-dark custom-btn oval-btn" 
                             onclick="requestNotificationPermission()"><i class="bi bi-send"></i></button>
+
+                            <button id="btnLocation" aria-label="Name" class="btn btn-dark custom-btn oval-btn" ><i class="bi bi-geo-alt"></i></button>
+
                         <button id="btnAdd" aria-label="Name" class="btn btn-dark custom-btn oval-btn" ><i
                                 class="bi bi-floppy-fill"></i></button>
                         <button id="btnCapture" aria-label="Name" onclick="capturePhoto()"
@@ -57,6 +60,16 @@
     </main>
 
     <script src="/js/app.js"></script>
+
+    <script>
+        // Button elementini seç
+        var btnLocation = document.getElementById("btnLocation");
+
+        // Button'a tıklandığında belirli bir sayfaya yönlendir
+        btnLocation.addEventListener("click", function() {
+            window.location.href = "/pages/location.html";
+        });
+    </script>
 
 </body>
 
