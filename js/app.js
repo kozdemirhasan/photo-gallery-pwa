@@ -44,6 +44,8 @@ function updateCamera() {
 
   };
 
+  console.log('Camera mode: ' + currentFacingMode);
+
   navigator.mediaDevices.getUserMedia(constraints)
     .then((stream) => {
       // Başarılı şekilde mikrofon ve kameraya erişildiğinde yapılacak işlemler
@@ -72,7 +74,6 @@ toggleCameraButton.addEventListener('click', () => {
 
   // Kamera ayarlarını güncelle
   updateCamera();
-  resizeVideo();
   window.onload = resizeVideo;
   window.onresize = resizeVideo;
 });
