@@ -4,7 +4,7 @@ const btnEsc = document.getElementById('btnEsc');
 const video = document.getElementById('video');
 var note = document.getElementById('noteInput');
 const toggleCameraButton = document.getElementById('toggleCameraButton');
-let currentFacingMode = 'user'; // Varsayılan olarak arka kamera
+let currentFacingMode = 'environment'; // Varsayılan olarak arka kamera
 const photoGallery = document.getElementById('photoGallery');
 
 
