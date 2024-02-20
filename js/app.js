@@ -4,7 +4,9 @@ const btnEsc = document.getElementById('btnEsc');
 const video = document.getElementById('video');
 var note = document.getElementById('noteInput');
 const toggleCameraButton = document.getElementById('toggleCameraButton');
-var currentFacingMode = 'environment'; // Varsayılan olarak arka kamera
+var currentFacingMode = 'user'; // Varsayılan olarak arka kamera
+const photoGallery = document.getElementById('photoGallery');
+
 
 
 
@@ -74,8 +76,7 @@ toggleCameraButton.addEventListener('click', () => {
 
   // Kamera ayarlarını güncelle
   updateCamera();
-  window.onload = resizeVideo;
-  window.onresize = resizeVideo;
+  resizeVideo();
 });
 
 
@@ -263,6 +264,7 @@ function displayPhotoFromIndexedDB() {
 
         // Her fotoğraf için bir img etiketi oluştur ve boyutlandırma stilleri ekle
         photos.forEach(function (photo) {
+          photoGallery.style.display = 'block';
           var img = document.createElement('img');
           img.src = photo.photoUrl;
           img.className = 'photo';
@@ -286,6 +288,7 @@ function displayPhotoFromIndexedDB() {
         // Container'ı sayfaya ekle
         document.body.appendChild(photoContainer);
       } else {
+        photoGallery.style.display = 'none';
         console.log('No recorded photos found in IndexedDB.');
       }
     };
