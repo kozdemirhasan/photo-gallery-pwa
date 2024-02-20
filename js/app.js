@@ -31,6 +31,9 @@ displayPhotoFromIndexedDB();
 //   }
 // };
 
+// Sayfa yüklendiğinde kamerayı başlat
+updateCamera();
+
 // Kamera ayarlarını güncelleme fonksiyonu
 function updateCamera() {
   const constraints = {
@@ -58,20 +61,19 @@ function updateCamera() {
 // Kamera geçiş butonuna tıklandığında
 toggleCameraButton.addEventListener('click', () => {
   // Mevcut kamera modunu değiştir
-  // if (currentFacingMode === 'environment') {
-  //   currentFacingMode = 'user'; // Ön kamera
-  //   console.log('Frontkamera ausgewählt');
-  // } else {
-  //   currentFacingMode = 'environment'; // Arka kamera
-  //   console.log('Rückfahrkamera ausgewählt');
-  // }
+  if (currentFacingMode == 'environment') {
+    currentFacingMode = 'user'; // Ön kamera
+    console.log('Frontkamera ausgewählt');
+  } else if (currentFacingMode == 'user') {
+    currentFacingMode = 'environment'; // Arka kamera
+    console.log('Rückfahrkamera ausgewählt');
+  }
 
-  // // Kamera ayarlarını güncelle
-  // updateCamera();
+  // Kamera ayarlarını güncelle
+  updateCamera();
 });
 
-// Sayfa yüklendiğinde kamerayı başlat
-updateCamera();
+
 
 
 
