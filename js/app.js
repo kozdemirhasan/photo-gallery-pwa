@@ -3,6 +3,8 @@ const btnCapture = document.getElementById('btnCapture');
 const btnEsc = document.getElementById('btnEsc');
 const video = document.getElementById('video');
 var note = document.getElementById('noteInput');
+const toggleCameraButton = document.getElementById('toggleCameraButton');
+let currentFacingMode = 'environment'; // Varsayılan olarak arka kamera
 
 
 
@@ -22,23 +24,58 @@ displayPhotoFromIndexedDB();
 
 
 
-const constraints = {
-  // audio: true, // Mikrofona erişim sağlamak için
-  video: {
-    facingMode: 'environment' // Arka kameraya erişim sağlamak için (mobil cihazlar için)
-  }
-};
+// const constraints = {
+//   // audio: true, // Mikrofona erişim sağlamak için
+//   video: {
+//     facingMode: 'environment' // Arka kameraya erişim sağlamak için (mobil cihazlar için)
+//   }
+// };
 
-navigator.mediaDevices.getUserMedia(constraints)
-  .then((stream) => {
-    // Başarılı şekilde mikrofon ve kameraya erişildiğinde yapılacak işlemler
-    console.log("Zugriff auf Mikrofon und Kamera erlaubt");
-    video.srcObject = stream; // Videoyu görüntüleme veya işleme
-  })
-  .catch((error) => {
-    // Kullanıcı erişim iznini reddetti veya bir hata oluştuğunda yapılacak işlemler
-    console.error('Error accessing camera and/or microphone:', error);
-  });
+
+
+
+// Kamera ayarlarını güncelleme fonksiyonu
+function updateCamera() {
+  const constraints = {
+    // audio: true,
+    video: {
+      facingMode: currentFacingMode
+    }
+  };
+
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      // Başarılı şekilde mikrofon ve kameraya erişildiğinde yapılacak işlemler
+      console.log("Zugriff auf Mikrofon und Kamera erlaubt");
+      video.srcObject = stream; // Videoyu görüntüleme veya işleme
+    })
+    .catch((error) => {
+      // Kullanıcı erişim iznini reddetti veya bir hata oluştuğunda yapılacak işlemler
+      console.error('Error accessing camera and/or microphone:', error);
+    });
+}
+
+
+
+
+// Kamera geçiş butonuna tıklandığında
+toggleCameraButton.addEventListener('click', () => {
+  // Mevcut kamera modunu değiştir
+  if (currentFacingMode === 'environment') {
+    currentFacingMode = 'user'; // Ön kamera
+    console.log('ön kamera aktif');
+  } else {
+    currentFacingMode = 'environment'; // Arka kamera
+    console.log('Arka kamera aktif');
+  }
+
+  // Kamera ayarlarını güncelle
+  updateCamera();
+});
+
+// Sayfa yüklendiğinde kamerayı başlat
+updateCamera();
+
 
 
 
@@ -94,18 +131,18 @@ function savePhotoToIndexedDB(photoDataUrl) {
   var request = indexedDB.open('photoDB', 1);
 
   request.onerror = function (event) {
-      console.log('Error opening IndexedDB:', event.target.errorCode);
+    console.log('Error opening IndexedDB:', event.target.errorCode);
   };
 
   request.onupgradeneeded = function (event) {
-      var db = event.target.result;
-      // // Notlar için bir nesne deposu (object store) oluştur
-      // var objectStore = db.createObjectStore('notes', { keyPath: 'id', autoIncrement: true });
-      // Fotograflar için bir nesne deposu (object store) oluştur
-      var objectStore = db.createObjectStore('photos', { keyPath: 'id', autoIncrement: true });
-      // Kulllanicilar için bir nesne deposu (object store) oluştur
-      // var objectStore = db.createObjectStore('users', { keyPath: 'id', autoIncrement: true });
-    };    
+    var db = event.target.result;
+    // // Notlar için bir nesne deposu (object store) oluştur
+    // var objectStore = db.createObjectStore('notes', { keyPath: 'id', autoIncrement: true });
+    // Fotograflar için bir nesne deposu (object store) oluştur
+    var objectStore = db.createObjectStore('photos', { keyPath: 'id', autoIncrement: true });
+    // Kulllanicilar için bir nesne deposu (object store) oluştur
+    // var objectStore = db.createObjectStore('users', { keyPath: 'id', autoIncrement: true });
+  };
 
   request.onsuccess = function (event) {
     var db = event.target.result;
@@ -216,7 +253,7 @@ function downloadPhoto() {
 function displayPhotoFromIndexedDB() {
 
   var request = indexedDB.open('photoDB', 1);
-  var db ;
+  var db;
 
   request.onerror = function (event) {
     console.log('Error opening IndexedDB:', event.target.errorCode);
@@ -297,7 +334,7 @@ function requestNotificationPermission() {
         // İzin verildiğinde bildirim gönderme işlemini gerçekleştir
         sendNotification();
         // sendNotificationWithDelay();
-      }      
+      }
     });
   } else {
     // Zaten izin verildiğinde direkt bildirim gönderme işlemini gerçekleştir
@@ -353,220 +390,7 @@ function showNotification() {
 
 
 
-/*
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBuViKspJVFBOy1rGnd8bLoDq22Igc9Edg",
-  authDomain: "pwa-photo-gallery-c06ba.firebaseapp.com",
-  projectId: "pwa-photo-gallery-c06ba",
-  storageBucket: "pwa-photo-gallery-c06ba.appspot.com",
-  messagingSenderId: "351307904337",
-  appId: "1:351307904337:web:accc87f6907fcda1c3cf70",
-  measurementId: "G-F9KS9TVT2G"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-
-// FIREBASE
-const db = firebase.firestore();
-
-// Not eklemek için bir koleksiyon referansı al
-const notesCollection = db.collection('notes');
-
-// Yeni bir not eklemek için
-function addNoteToFirebase(note) {
-  notesCollection.add({
-    note: note,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp() // Sunucu zamanıyla notun eklendiği zamanı kaydet
-  })
-    .then(docRef => {
-      console.log('Note successfully added:', docRef.id);
-    })
-    .catch(error => {
-      console.error('Error adding note:', error);
-    });
-}
-
-
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-admin.initializeApp();
-
-exports.sendNotificationOnNoteAdded = functions.firestore
-  .document('notes/{noteId}')
-  .onCreate((snapshot, context) => {
-    // Yeni notun verisini al
-    const noteData = snapshot.data();
-
-    // Bildirim gönderme işlemleri
-    // Örneğin: Push bildirimi gönderme veya e-posta gönderme
-  });
-
-
-*/
 
 
 
 
-
-
-/*
- 
-//// 1 saniye titreşim, 1 saniye bekleme, ardından 2 saniye titreşim
-//const vibrationPattern = [1000, 1000, 2000];
-//
-//// Titreşimi başlat
-//navigator.vibrate(vibrationPattern);
-//
-//// Belirli bir süre sonra titreşimi durdurmak için
-//setTimeout(() => {
-//  navigator.vibrate(0); // 0 parametresiyle titreşimi durdur
-//}, 5000); // Örneğin, 5 saniye sonra titreşimi durdur
- 
- 
- 
- 
- 
-//// Bluetooth API'larına erişim izni iste
-//navigator.bluetooth.requestDevice({ filters: [{ services: ['battery_service'] }] })
-//  .then(device => {
-//    // Cihazı bulduktan sonra işlemleri yap
-//    console.log('Bulunan cihaz:', device.name);
-//  })
-//  .catch(error => {
-//    console.error('Bluetooth cihazı bulma hatası:', error);
-//  });
- 
- 
- 
-//PUSH NOTIFICATION
-// Bu kod, push bildirimine izin verildiğinde bildirim gösterir
-function askPermission() {
-  Notification.requestPermission().then(permission => {
-    if (permission === "granted") {
-      //  showNotification();
-      //  console.log('man kann hier push notification schreiben...  ')
-    } else {
-      console.error("Push notification permission denied");
-    }
-  });
-}
- 
-// Bu kod, sayfa yüklendiğinde push izni kontrol eder ve gerekirse izin ister
-window.addEventListener("load", function () {
-  if ("serviceWorker" in navigator && "PushManager" in window) {
-    // Service Worker destekliyorsa ve PushManager kullanılabiliyorsa
-    navigator.serviceWorker.ready
-      .then(function (registration) {
-        return registration.pushManager.getSubscription();
-      })
-      .then(function (subscription) {
-        if (!subscription) {
-          askPermission();
-        }
-      })
-      .catch(function (error) {
-        console.error("Error checking push subscription:", error);
-      });
-  } else {
-    console.log("Push notifications are not supported in this browser.");
-  }
-});
- 
-// Bu fonksiyon, push bildirimi göstermek için kullanılır
-function showNotification() {
-  // Notification API'sini kullanarak bildirim oluştur
-  self.registration.showNotification("Baslik", {
-    body: "Bildirim icerigi"
-    //icon: "path/to/icon.png", // Bildirim ikonu (isteğe bağlı)
-  });
-}
- 
- 
- 
- 
-//indexedDB
- 
-// IndexedDB'nin adı
-const dbName = "myDatabase";
-const storeName = "myStore";
- 
-// Veritabanı oluşturma veya var olanı açma
-const openDB = () => {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(dbName, 1);
- 
-        request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            db.createObjectStore(storeName, { keyPath: "id" });
-        };
- 
-        request.onsuccess = (event) => {
-            const db = event.target.result;
-            resolve(db);
-        };
- 
-        request.onerror = (event) => {
-            reject(event.target.error);
-        };
-    });
-};
- 
-// Veriyi IndexedDB'ye ekleme
-const addToDB = (data) => {
-    openDB().then((db) => {
-        const transaction = db.transaction([storeName], "readwrite");
-        const store = transaction.objectStore(storeName);
- 
-        store.add(data);
-    });
-};
- 
- 
- 
-// Veritabanından veri çekme
-const getFromDB = () => {
-    return new Promise((resolve, reject) => {
-        openDB().then((db) => {
-            const transaction = db.transaction([storeName], "readonly");
-            const store = transaction.objectStore(storeName);
-            const request = store.getAll();
- 
-            request.onsuccess = (event) => {
-                resolve(event.target.result);
-            };
- 
-            request.onerror = (event) => {
-                reject(event.target.error);
-            };
-        });
-    });
-};
- 
-// Çevrimdışı durumda veriyi kullanma
-function useOfflineData() {
-    getFromDB().then((data) => {
-        // Verileri kullanma
-        console.log("Çevrimdışı Veriler:", data);
-    });
-}
- 
-// Çevrimdışı durumu kontrol etme
-function checkOfflineStatus() {
-    if (!navigator.onLine) {
-        useOfflineData();
-    }
-}
- 
-*/
