@@ -72,7 +72,7 @@ toggleCameraButton.addEventListener('click', () => {
 
   // Kamera ayarlarını güncelle
   updateCamera();
-  // resizeVideo();
+  resizeVideo();
   window.onload = resizeVideo;
   window.onresize = resizeVideo;
 });
