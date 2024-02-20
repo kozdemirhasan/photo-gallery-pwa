@@ -8,12 +8,12 @@ loginUser.addEventListener('click', function () {
     let result = validateLogin(email, password);
     if (result === true) {
         checkUser(email, password);
-
     }
 });
 
 function checkUser(userEmail, userPassword) {
     var request = indexedDB.open('photoDB', 1);
+
 
     request.onerror = function (event) {
         console.log('Es sind keine Benutzer im System registriert.');
@@ -34,23 +34,32 @@ function checkUser(userEmail, userPassword) {
         var transaction = db.transaction(['users'], 'readonly');
         var objectStore = transaction.objectStore('users');
 
+
         objectStore.getAll().onsuccess = function (event) {
             var users = event.target.result;
             if (users.length > 0) {
-
+                let userFound = false;
                 // Her fotoğraf için bir img etiketi oluştur ve boyutlandırma stilleri ekle
                 users.forEach(function (user) {
                     if (user.email === userEmail && user.password === userPassword) {
                         console.log('Benutzer gefunden: ' + user.email + '\n');
+                        userFound = true;
                         window.location.href = '/pages/foto.html';
                     }
                 });
 
+                if (!userFound) {
+                    alert('Benutzer nicht gefunden.');
+                }
+
             } else {
                 console.log('sistemde kayitli kullanici yok.');
             }
+
+
         };
     };
+
 }
 
 function validateLogin(userEmail, userPassword) {
@@ -60,7 +69,7 @@ function validateLogin(userEmail, userPassword) {
         alert("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
         return false;
     }
-   
+
 
     if (userPassword.length < 8) {
         alert("Das Passwort muss mindestens 8 Zeichen lang sein.");
