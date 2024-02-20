@@ -4,7 +4,7 @@ const btnEsc = document.getElementById('btnEsc');
 const video = document.getElementById('video');
 var note = document.getElementById('noteInput');
 const toggleCameraButton = document.getElementById('toggleCameraButton');
-let currentFacingMode = 'user'; // Varsayılan olarak arka kamera
+var currentFacingMode = 'environment'; // Varsayılan olarak arka kamera
 
 
 
@@ -41,6 +41,7 @@ function updateCamera() {
     video: {
       facingMode: currentFacingMode
     }
+   
   };
 
   navigator.mediaDevices.getUserMedia(constraints)
