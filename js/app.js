@@ -77,8 +77,6 @@ toggleCameraButton.addEventListener('click', () => {
 
 
 
-
-
 // Sayfa yüklendiğinde ve boyut değişikliklerinde video ve textarea boyutlarını ayarla
 window.onload = resizeVideo;
 window.onresize = resizeVideo;
