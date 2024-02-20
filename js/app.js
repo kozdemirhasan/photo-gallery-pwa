@@ -4,10 +4,8 @@ const btnEsc = document.getElementById('btnEsc');
 const video = document.getElementById('video');
 var note = document.getElementById('noteInput');
 const toggleCameraButton = document.getElementById('toggleCameraButton');
-var currentFacingMode = 'user'; // Varsayılan olarak arka kamera
+let currentFacingMode = 'user'; // Varsayılan olarak arka kamera
 const photoGallery = document.getElementById('photoGallery');
-
-
 
 
 //check if the sw is supported
@@ -20,10 +18,8 @@ if ("serviceWorker" in navigator) {
   })
 }
 
-
 //kayitli fotograflarin hepsini göster
 displayPhotoFromIndexedDB();
-
 
 
 // const constraints = {
@@ -34,31 +30,23 @@ displayPhotoFromIndexedDB();
 // };
 
 // Sayfa yüklendiğinde kamerayı başlat
-updateCamera();
-
+// updateCamera();
 // Kamera ayarlarını güncelleme fonksiyonu
-function updateCamera() {
-  const constraints = {
-    // audio: true,
-    video: {
-      facingMode: currentFacingMode
-    }
 
-  };
 
-  console.log('Camera mode: ' + currentFacingMode);
-
-  navigator.mediaDevices.getUserMedia(constraints)
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: currentFacingMode } })
     .then((stream) => {
       // Başarılı şekilde mikrofon ve kameraya erişildiğinde yapılacak işlemler
-      console.log("Zugriff auf Mikrofon und Kamera erlaubt");
+      // console.log("Zugriff auf Mikrofon und Kamera erlaubt");
+      console.log('Camera default mode: ' + currentFacingMode);
       video.srcObject = stream; // Videoyu görüntüleme veya işleme
     })
     .catch((error) => {
       // Kullanıcı erişim iznini reddetti veya bir hata oluştuğunda yapılacak işlemler
       console.error('Error accessing camera and/or microphone:', error);
     });
-}
+// }
+
 
 
 
@@ -66,17 +54,29 @@ function updateCamera() {
 // Kamera geçiş butonuna tıklandığında
 toggleCameraButton.addEventListener('click', () => {
   // Mevcut kamera modunu değiştir
-  if (currentFacingMode == 'environment') {
+  if (currentFacingMode === 'environment') {
     currentFacingMode = 'user'; // Ön kamera
-    console.log('Frontkamera ausgewählt');
-  } else if (currentFacingMode == 'user') {
+    // console.log('Frontkamera ausgewählt');
+  } else {
     currentFacingMode = 'environment'; // Arka kamera
-    console.log('Rückfahrkamera ausgewählt');
+    // console.log('Rückfahrkamera ausgewählt');
   }
 
+  // getUserMedia çağrısını güncelleme
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: currentFacingMode } })
+    .then(stream => {
+      // Kamera erişimi başarılı, akışı görüntüle
+      console.log('Camera mode: ' + currentFacingMode);
+      video.srcObject = stream;
+    })
+    .catch(error => {
+      // Hata durumunda
+      console.error('Error accessing camera:', error);
+    });
+
   // Kamera ayarlarını güncelle
-  updateCamera();
-  resizeVideo();
+  // updateCamera();
+  // resizeVideo();
 });
 
 
@@ -135,10 +135,7 @@ function savePhotoToIndexedDB(photoDataUrl) {
       console.log('Failed to save photo:', event.target.error);
     };
   };
-
 }
-
-
 
 // IndexedDB veritabanına butona tiklandiginda not ve fotograf ekleme fonksiyonu
 btnAdd.addEventListener('click', function () {
@@ -220,7 +217,6 @@ function downloadPhoto() {
   btnCapture.disabled = false;
   btnEsc.disabled = true;
 }
-
 
 
 
@@ -325,7 +321,7 @@ function sendNotification() {
   console.log('Notification sent');
   var notification = new Notification('Titel', {
     body: 'Inhalt',
-    icon: 'img/favicon.png'
+    icon: '/img/favicon.png'
   });
 
 
@@ -361,14 +357,12 @@ function showNotification() {
 }
 
 
+// LOCATION 
+var btnLocation = document.getElementById("btnLocation");
 
-
-
-
-
-
-
-
-
+// Button'a tıklandığında belirli bir sayfaya yönlendir
+btnLocation.addEventListener("click", function () {
+  window.location.href = "/pages/location.html";
+});
 
 
