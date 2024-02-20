@@ -4,7 +4,7 @@ const btnEsc = document.getElementById('btnEsc');
 const video = document.getElementById('video');
 var note = document.getElementById('noteInput');
 const toggleCameraButton = document.getElementById('toggleCameraButton');
-let currentFacingMode = 'environment'; // Varsayılan olarak arka kamera
+let currentFacingMode = 'user'; // Varsayılan olarak arka kamera
 
 
 
@@ -30,9 +30,6 @@ displayPhotoFromIndexedDB();
 //     facingMode: 'environment' // Arka kameraya erişim sağlamak için (mobil cihazlar için)
 //   }
 // };
-
-
-
 
 // Kamera ayarlarını güncelleme fonksiyonu
 function updateCamera() {
@@ -61,16 +58,16 @@ function updateCamera() {
 // Kamera geçiş butonuna tıklandığında
 toggleCameraButton.addEventListener('click', () => {
   // Mevcut kamera modunu değiştir
-  if (currentFacingMode === 'environment') {
-    currentFacingMode = 'user'; // Ön kamera
-    console.log('ön kamera aktif');
-  } else {
-    currentFacingMode = 'environment'; // Arka kamera
-    console.log('Arka kamera aktif');
-  }
+  // if (currentFacingMode === 'environment') {
+  //   currentFacingMode = 'user'; // Ön kamera
+  //   console.log('Frontkamera ausgewählt');
+  // } else {
+  //   currentFacingMode = 'environment'; // Arka kamera
+  //   console.log('Rückfahrkamera ausgewählt');
+  // }
 
-  // Kamera ayarlarını güncelle
-  updateCamera();
+  // // Kamera ayarlarını güncelle
+  // updateCamera();
 });
 
 // Sayfa yüklendiğinde kamerayı başlat
@@ -97,32 +94,6 @@ btnAdd.disabled = true;
 btnCapture.disabled = false;
 btnEsc.disabled = true;
 
-
-
-
-// Function to save note to IndexedDB
-// function saveNoteToIndexedDB(note) {
-//   var request = indexedDB.open('photoDB', 1);
-
-//   request.onerror = function (event) {
-//     console.log('Error opening IndexedDB:', event.target.errorCode);
-//   };
-
-//   request.onsuccess = function (event) {
-//     var db = event.target.result;
-//     var transaction = db.transaction(['notes'], 'readwrite');
-//     var objectStore = transaction.objectStore('notes');
-//     var addRequest = objectStore.add({ note: note });
-
-//     addRequest.onsuccess = function (event) {
-//       console.log('Note saved to IndexedDB:', note);
-//     };
-
-//     transaction.onerror = function (event) {
-//       console.log('Failed to add note:', event.target.error);
-//     };
-//   };
-// }
 
 // Function to save photo to IndexedDB
 function savePhotoToIndexedDB(photoDataUrl) {
@@ -221,7 +192,6 @@ function escPhoto() {
 
 // Function to download the captured photo
 function downloadPhoto() {
-
   const photoDataUrl = canvas.toDataURL('image/png');
 
   // const a = document.createElement('a');
