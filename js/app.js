@@ -34,19 +34,19 @@ displayPhotoFromIndexedDB();
 // Kamera ayarlarını güncelleme fonksiyonu
 
 
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: currentFacingMode } })
-    .then((stream) => {
-      // Başarılı şekilde mikrofon ve kameraya erişildiğinde yapılacak işlemler
-      // console.log("Zugriff auf Mikrofon und Kamera erlaubt");
-      console.log('Camera default mode: ' + currentFacingMode);
-      video.srcObject = stream; // Videoyu görüntüleme veya işleme
-    })
-    .catch((error) => {
-      // Kullanıcı erişim iznini reddetti veya bir hata oluştuğunda yapılacak işlemler
-      console.error('Error accessing camera and/or microphone:', error);
-    });
-// }
 
+
+navigator.mediaDevices.getUserMedia({ video: { facingMode: currentFacingMode } })
+  .then((stream) => {
+    // Başarılı şekilde mikrofon ve kameraya erişildiğinde yapılacak işlemler
+    // console.log("Zugriff auf Mikrofon und Kamera erlaubt");
+    console.log('Camera default mode: ' + currentFacingMode);
+    video.srcObject = stream; // Videoyu görüntüleme veya işleme
+  })
+  .catch((error) => {
+    // Kullanıcı erişim iznini reddetti veya bir hata oluştuğunda yapılacak işlemler
+    console.error('Error accessing camera and/or microphone:', error);
+  });
 
 
 
